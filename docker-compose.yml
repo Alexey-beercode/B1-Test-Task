@@ -1,10 +1,14 @@
-﻿services:
+﻿version: '3.8' # Указана версия Docker Compose
+
+services:
   fileservice.presentation:
     image: fileservice.presentation
     build:
       context: ./src/Services/FIleService/
       dockerfile: FIleService.Presentation/Dockerfile
-      
+    networks:
+      - test-task-network
+
   fileservice_db:
     image: postgres:latest
     container_name: fileservice_db
@@ -16,3 +20,42 @@
       - "5432:5432"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - file-postgres-data:/var/lib/postgresql/data
+    networks:
+      - test-task-network
+
+  statementprocessingservice.presentation:
+    image: statementprocessingservice.presentation
+    build:
+      context: ./src/Services/StatementProcessingService/
+      dockerfile: StatementProcessingService.Presentation/Dockerfile
+    depends_on:
+      - statementprocessingservice_db
+    environment:
+      ConnectionStrings__ConnectionString: "Host=statementprocessingservice_db;Port=5433;Database=statement_processing_service;Username=postgres;Password=postgres"
+    ports:
+      - "8082:8082"
+    networks:
+      - test-task-network
+
+  statementprocessingservice_db:
+    image: postgres:latest
+    container_name: statementprocessingservice_db
+    environment:
+      POSTGRES_DB: statement_processing_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - statement-processing-postgres-data:/var/lib/postgresql/data
+    networks:
+      - test-task-network
+
+volumes:
+  statement-processing-postgres-data:
+  file-postgres-data:
+
+networks:
+  test-task-network:
+    driver: bridge

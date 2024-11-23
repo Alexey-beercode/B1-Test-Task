@@ -24,8 +24,7 @@ public static class WebApplicationExtension
             builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials();
+                .AllowAnyHeader();
         }); 
 
         app.MapControllers();

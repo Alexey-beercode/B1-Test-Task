@@ -13,7 +13,6 @@ public class BankStatementFileService : IBankStatementFileService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IExcelParserService _excelParserService;
     private readonly IBankStatementEntryService _entryService;
-    private readonly IFileService _fileService;
     private readonly IMapper _mapper;
 
     public BankStatementFileService(
@@ -26,7 +25,6 @@ public class BankStatementFileService : IBankStatementFileService
         _excelParserService = excelParserService;
         _entryService = entryService;
         _mapper = mapper;
-        _fileService = fileService;
     }
 
     public async Task<UploadBankStatementResponse> UploadFileAsync(
@@ -48,10 +46,9 @@ public class BankStatementFileService : IBankStatementFileService
         // Создаем запись о файле
         var file = new BankStatementFile
         {
-            Id = Guid.NewGuid(),
             FileName = request.FileName,
             UploadDate = DateTime.UtcNow,
-            Entries = entryEntities // Связываем записи с файлом
+            Entries = entryEntities
         };
 
         // Сохраняем файл и записи в одной транзакции
@@ -86,7 +83,7 @@ public class BankStatementFileService : IBankStatementFileService
         var file = await _unitOfWork.BankStatementFiles.GetByIdWithEntriesAsync(fileId, cancellationToken);
         if (file == null)
         {
-            throw new KeyNotFoundException("File not found.");
+            throw new EntityNotFoundException("File",fileId);
         }
 
         // Преобразуем данные файла в DTO

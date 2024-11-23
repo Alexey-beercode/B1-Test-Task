@@ -57,6 +57,7 @@ public static class WebApplicationBuilderExtension
         builder.Services.AddScoped<IFileMergeService, FileMergeService>();
         builder.Services.AddScoped<IStatisticsService, StatisticsService>();
         builder.Services.AddScoped<IFileImportService, FileImportService>();
+        builder.Services.AddSignalR();
         builder.Services.AddControllers();
     }
     
