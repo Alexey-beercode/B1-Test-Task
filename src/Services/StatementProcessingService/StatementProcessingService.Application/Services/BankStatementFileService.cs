@@ -1,4 +1,8 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoMapper;
 using StatementProcessingService.Application.Dtos.Request.File;
 using StatementProcessingService.Application.Dtos.Response.File;
 using StatementProcessingService.Application.Exceptions;
@@ -19,7 +23,7 @@ public class BankStatementFileService : IBankStatementFileService
         IUnitOfWork unitOfWork,
         IExcelParserService excelParserService,
         IBankStatementEntryService entryService,
-        IMapper mapper, IFileService fileService)
+        IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _excelParserService = excelParserService;
@@ -83,7 +87,7 @@ public class BankStatementFileService : IBankStatementFileService
         var file = await _unitOfWork.BankStatementFiles.GetByIdWithEntriesAsync(fileId, cancellationToken);
         if (file == null)
         {
-            throw new EntityNotFoundException("File",fileId);
+            throw new EntityNotFoundException("File", fileId);
         }
 
         // Преобразуем данные файла в DTO
@@ -95,5 +99,4 @@ public class BankStatementFileService : IBankStatementFileService
 
         return response;
     }
-    
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StatementProcessingService.Application.Dtos.Request.File;
-using StatementProcessingService.Application.Dtos.Response.Entries;
 using StatementProcessingService.Application.Interfaces.Services;
 
 namespace StatementProcessingService.Presentation.Controllers;

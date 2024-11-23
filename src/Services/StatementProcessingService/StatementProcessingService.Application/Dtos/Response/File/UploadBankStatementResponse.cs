@@ -1,4 +1,6 @@
-﻿namespace StatementProcessingService.Application.Dtos.Response.File;
+﻿using System;
+
+namespace StatementProcessingService.Application.Dtos.Response.File;
 
 public class UploadBankStatementResponse
 {

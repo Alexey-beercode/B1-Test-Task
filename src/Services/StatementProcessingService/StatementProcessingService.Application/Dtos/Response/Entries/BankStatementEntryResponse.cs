@@ -1,4 +1,6 @@
-﻿namespace StatementProcessingService.Application.Dtos.Response.Entries;
+﻿using System;
+
+namespace StatementProcessingService.Application.Dtos.Response.Entries;
 
 public class BankStatementEntryResponse
 {

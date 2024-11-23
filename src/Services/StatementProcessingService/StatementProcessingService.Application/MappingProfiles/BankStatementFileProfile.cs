@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using StatementProcessingService.Application.Dtos.Response.File;
 using StatementProcessingService.Domain.Entities;
 
@@ -9,9 +10,10 @@ public class BankStatementFileProfile : Profile
     public BankStatementFileProfile()
     {
         CreateMap<BankStatementFile, BankStatementDetailsResponse>()
-            .ForMember(dest => dest.Entries, opt => opt.Ignore()); 
-        
+            .ForMember(dest => dest.Entries, opt => opt.Ignore());
+
         CreateMap<BankStatementFile, BankStatementListItemResponse>()
-            .ForMember(dest => dest.EntriesCount, opt => opt.MapFrom(src => src.Entries != null ? src.Entries.Count() : 0));
+            .ForMember(dest => dest.EntriesCount,
+                opt => opt.MapFrom(src => src.Entries != null ? src.Entries.Count() : 0));
     }
 }

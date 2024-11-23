@@ -1,4 +1,8 @@
-﻿using StatementProcessingService.Application.Dtos.Request.File;
+﻿using System;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using StatementProcessingService.Application.Dtos.Request.File;
 using StatementProcessingService.Application.Dtos.Response.Entries;
 using StatementProcessingService.Application.Dtos.Response.File;
 using StatementProcessingService.Application.Interfaces.Services;
@@ -56,13 +60,15 @@ public class FileService : IFileService
     {
         using var memoryStream = new MemoryStream();
         using var writer = new StreamWriter(memoryStream);
-        
-        writer.WriteLine("AccountNumber,InitialBalanceActive,InitialBalancePassive,TurnoverDebit,TurnoverCredit,FinalBalanceActive,FinalBalancePassive");
+
+        writer.WriteLine(
+            "AccountNumber,InitialBalanceActive,InitialBalancePassive,TurnoverDebit,TurnoverCredit,FinalBalanceActive,FinalBalancePassive");
 
         // Данные записей
         foreach (var entry in statement.Entries)
         {
-            writer.WriteLine($"{entry.AccountNumber},{entry.InitialBalanceActive},{entry.InitialBalancePassive},{entry.TurnoverDebit},{entry.TurnoverCredit},{entry.FinalBalanceActive},{entry.FinalBalancePassive}");
+            writer.WriteLine(
+                $"{entry.AccountNumber},{entry.InitialBalanceActive},{entry.InitialBalancePassive},{entry.TurnoverDebit},{entry.TurnoverCredit},{entry.FinalBalanceActive},{entry.FinalBalancePassive}");
         }
 
         writer.Flush();

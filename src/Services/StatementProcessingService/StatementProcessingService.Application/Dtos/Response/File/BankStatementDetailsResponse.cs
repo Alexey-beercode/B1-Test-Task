@@ -1,4 +1,6 @@
-﻿using StatementProcessingService.Application.Dtos.Response.Entries;
+﻿using System;
+using System.Collections.Generic;
+using StatementProcessingService.Application.Dtos.Response.Entries;
 
 namespace StatementProcessingService.Application.Dtos.Response.File;
 

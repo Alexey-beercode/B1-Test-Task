@@ -1,0 +1,12 @@
+<div class="first-task">
+  <h2>Первое задание</h2>
+  <app-back-button></app-back-button>
+
+  <button (click)="generateFiles()" class="btn">Сгенерировать файлы</button>
+  <button (click)="mergeFiles()" class="btn" [disabled]="!canMerge">Слить файлы</button>
+  <button (click)="importFiles()" class="btn" [disabled]="!canImport">Импортировать файлы</button>
+  <button (click)="getStatistics()" class="btn" [disabled]="!canShowStatistics">Показать статистику</button>
+
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+  <app-error-message *ngIf="errorMessage" [message]="errorMessage"></app-error-message>
+</div>
