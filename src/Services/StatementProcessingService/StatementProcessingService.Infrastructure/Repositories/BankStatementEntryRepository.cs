@@ -60,6 +60,7 @@ public class BankStatementEntryRepository : BaseRepository<BankStatementEntry>, 
         Guid fileId, 
         CancellationToken cancellationToken = default)
     {
+        
         return await _dbSet
             .AsNoTracking()
             .Include(e => e.BankStatementFile)

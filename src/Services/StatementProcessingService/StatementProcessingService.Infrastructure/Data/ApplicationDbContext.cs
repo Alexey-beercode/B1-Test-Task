@@ -8,6 +8,10 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
+        if (!Database.CanConnect())
+        {
+            Database.Migrate();
+        }
     }
 
     public DbSet<BankStatementFile> BankStatementsStatementFiles { get; set; }

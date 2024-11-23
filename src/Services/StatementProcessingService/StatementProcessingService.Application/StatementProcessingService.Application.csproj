@@ -7,11 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Dtos\Request\" />
-      <Folder Include="Dtos\Response\" />
-      <Folder Include="Interfaces\" />
-      <Folder Include="MappingProfiles\" />
-      <Folder Include="Services\" />
+      <ProjectReference Include="..\StatementProcessingService.Domain\StatementProcessingService.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="13.0.1" />
+      <PackageReference Include="EPPlus" Version="7.5.1" />
     </ItemGroup>
 
 </Project>
