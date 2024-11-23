@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StatementProcessingService.Domain.Entities;
+using StatementProcessingService.Infrastructure.Data.Configuration;
 
 namespace StatementProcessingService.Infrastructure.Data;
 
@@ -19,5 +20,9 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.ApplyConfiguration(new BankStatementEntryConfiguration());
+        modelBuilder.ApplyConfiguration(new BankStatementFileConfiguration());
     }
 }

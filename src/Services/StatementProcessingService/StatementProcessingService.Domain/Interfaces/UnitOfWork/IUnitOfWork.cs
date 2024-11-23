@@ -5,6 +5,6 @@ namespace StatementProcessingService.Domain.Interfaces.UnitOfWork;
 public interface IUnitOfWork:IDisposable
 {
     Task<int> SaveChangesAsync(CancellationToken cancellationToken=default);
-    IBankStatementEntryRepository BankStatementEntries { get; set; }
-    IBankStatementFileRepository BankStatementFiles { get; set; }
+    IBankStatementEntryRepository BankStatementEntries { get; }
+    IBankStatementFileRepository BankStatementFiles { get; }
 }
