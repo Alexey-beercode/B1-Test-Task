@@ -47,6 +47,10 @@ public static class WebApplicationBuilderExtension
     public static void AddDatabase(this WebApplicationBuilder builder)
     {
         string? connectionString = builder.Configuration.GetConnectionString("ConnectionString");
+        if (string.IsNullOrEmpty(connectionString))
+        {
+            connectionString = "Host=localhost;Port=5432;Database=fileservice;Username=postgres;Password=postgres";
+        }
         builder.Services.AddDbContext<ApplicationDbContext>(options => { options.UseNpgsql(connectionString); });
         builder.Services.AddScoped<ApplicationDbContext>();
     }
@@ -57,8 +61,13 @@ public static class WebApplicationBuilderExtension
         builder.Services.AddScoped<IFileMergeService, FileMergeService>();
         builder.Services.AddScoped<IStatisticsService, StatisticsService>();
         builder.Services.AddScoped<IFileImportService, FileImportService>();
-        builder.Services.AddSignalR();
+        builder.Services.AddSignalR(options =>
+        {
+            options.EnableDetailedErrors = true;
+            options.HandshakeTimeout = TimeSpan.FromSeconds(30);
+        });
         builder.Services.AddControllers();
+        builder.Services.AddCors();
     }
     
 }

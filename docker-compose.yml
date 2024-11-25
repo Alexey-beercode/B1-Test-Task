@@ -1,4 +1,4 @@
-﻿version: '3.8' # Указана версия Docker Compose
+﻿version: '3.8'
 
 services:
   fileservice.presentation:
@@ -6,8 +6,15 @@ services:
     build:
       context: ./src/Services/FIleService/
       dockerfile: FIleService.Presentation/Dockerfile
+    ports:
+      - "8083:8083"
     networks:
       - test-task-network
+    environment:
+      - ASPNETCORE_URLS=http://+:8083
+      - ConnectionStrings__ConnectionString=Host=fileservice_db;Port=5432;Database=fileservice;Username=postgres;Password=postgres
+    depends_on:
+      - fileservice_db
 
   fileservice_db:
     image: postgres:latest
@@ -32,7 +39,8 @@ services:
     depends_on:
       - statementprocessingservice_db
     environment:
-      ConnectionStrings__ConnectionString: "Host=statementprocessingservice_db;Port=5433;Database=statement_processing_service;Username=postgres;Password=postgres"
+      - ASPNETCORE_URLS=http://+:8082
+      - ConnectionStrings__ConnectionString=Host=statementprocessingservice_db;Port=5432;Database=statement_processing_service;Username=postgres;Password=postgres
     ports:
       - "8082:8082"
     networks:

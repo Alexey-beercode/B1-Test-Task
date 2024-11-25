@@ -1,56 +1,68 @@
 import { Component } from '@angular/core';
-import { FileGeneratorService } from '../../services/file-generator.service';
-import { FileMergeService } from '../../services/file-merge.service';
-import { FileImportService } from '../../services/file-import.service';
-import { StatisticsService } from '../../services/statistics.service';
-import {BackButtonComponent} from '../../shared/components/back-button/back-button.component';
+import { CommonModule } from '@angular/common';
+import { FileImportComponent } from './components/file-import/file-import.component';
+import { BackButtonComponent } from '../../shared/components/back-button/back-button.component';
+import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner/loading-spinner.component';
+import { ErrorMessageComponent } from '../../shared/components/error-message/error-message.component';
+import {FileGeneratorComponent} from './components/file-gereator/file-generator.component';
+import {FileMergeComponent} from './components/file-merge/file-merge.component';
+import {StatisticsComponent} from './components/statistics/statistics.component';
 
 @Component({
   selector: 'app-first-task',
   templateUrl: './first-task.component.html',
+  styleUrls: ['./first-task.component.css'],
   standalone: true,
   imports: [
-    BackButtonComponent
+    CommonModule,
+    BackButtonComponent,
+    LoadingSpinnerComponent,
+    ErrorMessageComponent,
+    FileGeneratorComponent,
+    FileImportComponent,
+    FileMergeComponent,
+    StatisticsComponent,
   ],
-  styleUrls: ['./first-task.component.css']
 })
 export class FirstTaskComponent {
-  loading = false;
+  currentView: 'generator' | 'importer' | 'merger' | 'statistics' | null = null;
+  canMerge = false;
+  canImport = false;
+  canShowStatistics = false;
+  isLoading = false;
   errorMessage: string | null = null;
-  canMerge = false; // Условие для возможности слияния
-  canImport = false; // Условие для возможности импорта
-  canShowStatistics = false; // Условие для статистики
 
-  constructor(
-    private fileGeneratorService: FileGeneratorService,
-    private fileMergeService: FileMergeService,
-    private fileImportService: FileImportService,
-    private statisticsService: StatisticsService
-  ) {}
-
-  generateFiles() {
-    this.loading = true;
-    this.fileGeneratorService.generateFiles().subscribe({
-      next: (response) => {
-        this.loading = false;
-        this.canMerge = true;
-      },
-      error: (error) => {
-        this.loading = false;
-        this.errorMessage = 'Ошибка при генерации файлов.';
-      }
-    });
+  showGenerator(): void {
+    console.log('showGenerator вызван'); // Отладочное сообщение
+    this.currentView = 'generator';
   }
 
-  mergeFiles() {
-    // Логика для слияния файлов
+  showImporter(): void {
+    console.log('showImporter вызван'); // Отладочное сообщение
+    this.currentView = 'importer';
   }
 
-  importFiles() {
-    // Логика для импорта файлов
+  onGenerationComplete(success: boolean): void {
+    if (success) {
+      this.canImport = true;
+      this.canMerge=true;
+    }
   }
 
-  getStatistics() {
-    // Логика для получения статистики
+  onLoadingChange(loading: boolean): void {
+    this.isLoading = loading;
+  }
+
+  onErrorChange(error: string | null): void {
+    this.errorMessage = error;
+  }
+
+  mergeFiles(): void {
+    this.currentView = 'merger';
+  }
+
+  showStatistics(): void {
+    this.currentView = 'statistics';
+    this.canShowStatistics = true;
   }
 }

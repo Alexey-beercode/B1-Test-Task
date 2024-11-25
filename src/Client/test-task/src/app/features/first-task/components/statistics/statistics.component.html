@@ -1,0 +1,16 @@
+<div class="statistics-container">
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+  <app-error-message *ngIf="errorMessage" [message]="errorMessage"></app-error-message>
+
+  <div *ngIf="statistics" class="statistics-content">
+    <h3>Статистика объединения файлов</h3>
+    <div class="stat-item">
+      <span>Сумма:</span>
+      <span>{{statistics.sumOfIntegers}}</span>
+    </div>
+    <div class="stat-item">
+      <span>Медиана:</span>
+      <span>{{statistics.medianOfDecimals}}</span>
+    </div>
+  </div>
+</div>

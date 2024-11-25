@@ -1,13 +1,24 @@
 .back-btn {
-  padding: 10px 20px;
-  font-size: 16px;
+  background-color: #217346;
   color: white;
-  background-color: #dc3545;
   border: none;
-  border-radius: 5px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.back-btn::before {
+  content: "←";
+  margin-right: 8px;
+  font-size: 16px;
 }
 
 .back-btn:hover {
-  background-color: #c82333;
+  background-color: #1a5c38;
 }

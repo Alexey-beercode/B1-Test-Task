@@ -7,28 +7,29 @@ public static class WebApplicationExtension
 {
     public static void AddSwagger(this WebApplication app)
     {
-        if (app.Environment.IsProduction())
+        if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
     }
+
     public static void AddApplicationMiddleware(this WebApplication app)
     {
         app.MapHub<ImportProgressHub>("/importProgressHub");
-        app.UseHttpsRedirection(); 
-        app.UseRouting(); 
-        
+        app.UseHttpsRedirection();
+        app.UseRouting();
         app.UseCors(builder =>
         {
             builder
-                .AllowAnyOrigin()
+                .WithOrigins("http://localhost:4200") // укажите URL вашего Angular приложения
                 .AllowAnyMethod()
-                .AllowAnyHeader();
-        }); 
-
+                .AllowAnyHeader()
+                .AllowCredentials()
+                .SetIsOriginAllowed(host => true); 
+        });
         app.MapControllers();
-        
+
         app.UseMiddleware<ExceptionHandlingMiddleware>();
     }
 }

@@ -21,7 +21,8 @@ export class BankStatementEntriesService {
   getPagedEntries(request: GetBankStatementsRequest): Observable<BankStatementEntryResponse[]> {
     const params = new HttpParams()
       .set('page', request.page.toString())
-      .set('pageSize', request.pageSize.toString());
+      .set('pageSize', request.pageSize.toString())
+        .set('bankStatementId', request.bankStatementId);
 
     return this.http.get<BankStatementEntryResponse[]>
     (this.apiUrl, { params });

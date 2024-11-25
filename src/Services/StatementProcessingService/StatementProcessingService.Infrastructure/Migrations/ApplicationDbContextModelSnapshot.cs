@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using StatementProcessingService.Infrastructure.Data;
 
 #nullable disable
 
@@ -30,10 +29,11 @@ namespace StatementProcessingService.Infrastructure.Migrations
 
                     b.Property<string>("AccountNumber")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
 
                     b.Property<Guid>("BankStatementId")
+                        .HasMaxLength(255)
                         .HasColumnType("uuid");
 
                     b.Property<decimal>("FinalBalanceActive")

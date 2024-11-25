@@ -29,8 +29,8 @@ namespace StatementProcessingService.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    BankStatementId = table.Column<Guid>(type: "uuid", nullable: false),
-                    AccountNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    BankStatementId = table.Column<Guid>(type: "uuid", maxLength: 255, nullable: false),
+                    AccountNumber = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
                     InitialBalanceActive = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     InitialBalancePassive = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     TurnoverDebit = table.Column<decimal>(type: "numeric(18,2)", nullable: false),

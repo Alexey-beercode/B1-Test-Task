@@ -18,6 +18,5 @@ public interface IBankStatementFileService
         CancellationToken cancellationToken = default);
 
     Task<IEnumerable<BankStatementListItemResponse>> GetFilesListAsync(
-        GetBankStatementsRequest request,
         CancellationToken cancellationToken = default);
 }

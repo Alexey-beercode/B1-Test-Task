@@ -1,0 +1,72 @@
+<div class="file-list-container">
+  <div class="file-list-header">
+    <h2>Загруженные файлы</h2>
+    <button class="refresh-btn" (click)="refreshList()" [disabled]="isLoading">
+      <span class="refresh-icon">↻</span>
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!isLoading && !error" class="file-list">
+    <div *ngIf="files.length === 0" class="no-files">
+      Нет загруженных файлов
+    </div>
+
+    <div *ngFor="let file of files" class="file-item" (click)="onFileClick(file)">
+      <div class="file-info">
+        <div class="file-name">{{ file.fileName }}</div>
+        <div class="file-details">
+          <div class="detail-row">
+            <span class="detail-label">Дата загрузки:</span>
+            <span class="upload-date">
+              {{ file.uploadDate | date:'dd.MM.yyyy HH:mm' }}
+            </span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Количество записей:</span>
+            <span class="entries-count">
+              {{ getEntriesCountText(file.entriesCount) }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="file-actions">
+        <button
+          class="action-btn download-btn"
+          (click)="downloadFile(file.id, file.fileName, $event)"
+          title="Скачать файл"
+        >
+          <span class="material-icons">download</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination" *ngIf="files.length > 0">
+    <button
+      class="pagination-btn"
+      [disabled]="currentPage === 1"
+      (click)="changePage(currentPage - 1)"
+    >
+      ←
+    </button>
+    <span class="page-info">
+      Страница {{ currentPage }}
+    </span>
+    <button
+      class="pagination-btn"
+      [disabled]="files.length < pageSize"
+      (click)="changePage(currentPage + 1)"
+    >
+      →
+    </button>
+  </div>
+</div>

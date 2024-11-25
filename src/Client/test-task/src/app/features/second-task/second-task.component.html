@@ -1,0 +1,37 @@
+<!-- second-task.component.html -->
+<div class="second-task">
+  <h2>Второе задание</h2>
+  <app-back-button></app-back-button>
+
+  <div class="actions-section">
+    <button
+      class="btn"
+      (click)="showUploadModal()"
+      [disabled]="isLoading"
+    >
+      Загрузить файл
+    </button>
+  </div>
+
+  <div class="content-container">
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    <app-error-message *ngIf="errorMessage" [message]="errorMessage"></app-error-message>
+
+    <app-file-list
+      *ngIf="!selectedFileId"
+      (fileSelected)="onFileSelected($event)"
+    ></app-file-list>
+
+    <app-file-details
+      *ngIf="selectedFileId"
+      [fileId]="selectedFileId"
+      [fileName]="selectedFileName"
+    ></app-file-details>
+
+    <app-upload-modal
+      *ngIf="showModal"
+      (close)="closeModal()"
+      (uploadComplete)="onUploadComplete($event)"
+    ></app-upload-modal>
+  </div>
+</div>

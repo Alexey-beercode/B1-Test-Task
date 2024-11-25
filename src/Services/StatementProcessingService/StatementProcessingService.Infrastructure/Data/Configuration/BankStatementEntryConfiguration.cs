@@ -13,11 +13,12 @@ public class BankStatementEntryConfiguration : IEntityTypeConfiguration<BankStat
         builder.HasKey(e => e.Id);
         
         builder.Property(e => e.BankStatementId)
+            .HasMaxLength(255)
             .IsRequired();
-        
+
         builder.Property(e => e.AccountNumber)
-            .IsRequired()
-            .HasMaxLength(50);
+            .HasMaxLength(512)
+            .IsRequired();
         
         builder.Property(e => e.InitialBalanceActive)
             .HasColumnType("decimal(18,2)")

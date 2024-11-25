@@ -1,4 +1,5 @@
-﻿using StatementProcessingService.Application.Dtos.Response.Entries;
+﻿using Microsoft.AspNetCore.Http;
+using StatementProcessingService.Application.Dtos.Response.Entries;
 using StatementProcessingService.Application.Dtos.Response.File;
 
 namespace StatementProcessingService.Application.Interfaces.Services;
@@ -6,7 +7,7 @@ namespace StatementProcessingService.Application.Interfaces.Services;
 public interface IExcelParserService
 {
     Task<IEnumerable<BankStatementEntryResponse>> ParseExcelFileAsync(
-        Stream fileStream,
+        IFormFile fileStream,
         CancellationToken cancellationToken = default);
             
     Task<byte[]> GenerateExcelFileAsync(

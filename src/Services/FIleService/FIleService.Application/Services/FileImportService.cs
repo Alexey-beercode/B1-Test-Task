@@ -84,8 +84,12 @@ public class FileImportService : IFileImportService
 
         try
         {
+            var date = DateTime.ParseExact(parts[0], DateFormat, CultureInfo.InvariantCulture);
+            // Явно указываем, что дата в UTC
+            date = DateTime.SpecifyKind(date, DateTimeKind.Utc);
+        
             return DataRow.Create(
-                DateTime.ParseExact(parts[0], DateFormat, CultureInfo.InvariantCulture),
+                date,
                 parts[1],
                 parts[2],
                 long.Parse(parts[3]),

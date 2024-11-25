@@ -11,10 +11,10 @@ public class BankStatementFileConfiguration : IEntityTypeConfiguration<BankState
         builder.ToTable("BankStatementFiles");
         
         builder.HasKey(f => f.Id);
-        
+
         builder.Property(f => f.FileName)
-            .IsRequired()
-            .HasMaxLength(255); 
+            .HasMaxLength(255)
+            .IsRequired();
         
         builder.Property(f => f.UploadDate)
             .IsRequired();

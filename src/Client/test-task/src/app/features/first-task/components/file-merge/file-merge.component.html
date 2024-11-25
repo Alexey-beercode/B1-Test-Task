@@ -1,0 +1,40 @@
+<div class="merge-container">
+  <div class="input-group">
+    <input
+      type="text"
+      [(ngModel)]="excludePattern"
+      placeholder="Введите слово для исключения"
+      [disabled]="loading"
+    >
+    <button
+      (click)="mergeFiles()"
+      [disabled]="loading || !excludePattern"
+      class="merge-btn"
+    >
+      Объединить файлы
+    </button>
+  </div>
+
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+  <app-error-message *ngIf="errorMessage" [message]="errorMessage"></app-error-message>
+
+  <div *ngIf="mergeResult" class="result-container">
+    <h3>Результат объединения файлов</h3>
+    <div class="result-item">
+      <span>Обработано строк:</span>
+      <span>{{mergeResult.totalLinesProcessed}}</span>
+    </div>
+    <div class="result-item">
+      <span>Исключено строк:</span>
+      <span>{{mergeResult.excludedLinesCount}}</span>
+    </div>
+    <div class="result-item">
+      <span>Путь к файлу:</span>
+      <span class="file-path">{{mergeResult.outputFilePath}}</span>
+    </div>
+    <div class="result-item">
+      <span>Время обработки:</span>
+      <span>{{mergeResult.processingTime}}</span>
+    </div>
+  </div>
+</div>

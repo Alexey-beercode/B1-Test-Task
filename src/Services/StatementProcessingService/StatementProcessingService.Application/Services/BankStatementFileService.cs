@@ -70,8 +70,7 @@ public class BankStatementFileService : IBankStatementFileService
         };
     }
 
-    public async Task<IEnumerable<BankStatementListItemResponse>> GetFilesListAsync(
-        GetBankStatementsRequest request, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<BankStatementListItemResponse>> GetFilesListAsync(CancellationToken cancellationToken = default)
     {
         // Получаем список файлов из базы данных
         var files = await _unitOfWork.BankStatementFiles.GetFilesSummaryAsync(cancellationToken);

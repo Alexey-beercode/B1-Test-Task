@@ -1,0 +1,59 @@
+<!-- file-details.component.html -->
+<div class="file-details">
+  <h2>{{fileName}}</h2>
+
+  <div *ngIf="isLoading" class="loading">
+    Загрузка данных...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{error}}
+  </div>
+
+  <div *ngIf="!isLoading && !error" class="table-wrapper">
+    <table class="excel-table">
+      <thead>
+      <tr>
+        <th>Б/сч</th>
+        <th>Входящее сальдо Актив</th>
+        <th>Входящее сальдо Пассив</th>
+        <th>Обороты Дебет</th>
+        <th>Обороты Кредит</th>
+        <th>Исходящее сальдо Актив</th>
+        <th>Исходящее сальдо Пассив</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let row of tableData">
+        <td>{{row.accountNumber}}</td>
+        <td>{{row.initialBalanceActive | number:'1.2-2'}}</td>
+        <td>{{row.initialBalancePassive | number:'1.2-2'}}</td>
+        <td>{{row.turnoverDebit | number:'1.2-2'}}</td>
+        <td>{{row.turnoverCredit | number:'1.2-2'}}</td>
+        <td>{{row.finalBalanceActive | number:'1.2-2'}}</td>
+        <td>{{row.finalBalancePassive | number:'1.2-2'}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <button
+        [disabled]="currentPage === 1"
+        (click)="onPageChange(currentPage - 1)"
+        class="pagination-btn"
+      >
+        ←
+      </button>
+      <span class="page-info">
+        Страница {{currentPage}}
+      </span>
+      <button
+        [disabled]="tableData.length < pageSize"
+        (click)="onPageChange(currentPage + 1)"
+        class="pagination-btn"
+      >
+        →
+      </button>
+    </div>
+  </div>
+</div>

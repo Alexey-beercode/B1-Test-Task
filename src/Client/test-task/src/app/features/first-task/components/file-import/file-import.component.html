@@ -1,0 +1,18 @@
+<div class="import-container">
+  <div *ngIf="loading" class="progress-container">
+
+    <div *ngIf="progress" class="progress-info">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progress.percentage"></div>
+      </div>
+      <div class="progress-text">
+        <p>{{progress.status}}</p>
+        <p>Обработано: {{progress.processed}} из {{progress.total}} ({{progress.percentage}}%)</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="success" class="success-message">
+    Импорт успешно завершен!
+  </div>
+</div>

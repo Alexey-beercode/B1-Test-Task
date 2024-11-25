@@ -2,11 +2,65 @@
   <h2>Первое задание</h2>
   <app-back-button></app-back-button>
 
-  <button (click)="generateFiles()" class="btn">Сгенерировать файлы</button>
-  <button (click)="mergeFiles()" class="btn" [disabled]="!canMerge">Слить файлы</button>
-  <button (click)="importFiles()" class="btn" [disabled]="!canImport">Импортировать файлы</button>
-  <button (click)="getStatistics()" class="btn" [disabled]="!canShowStatistics">Показать статистику</button>
+  <div class="actions-section">
+    <button
+      class="btn"
+      (click)="showGenerator()"
+      [disabled]="isLoading"
+    >
+      Сгенерировать файлы
+    </button>
+    <button
+      class="btn"
+      (click)="showImporter()"
+      [disabled]="!canImport || isLoading"
+    >
+      Импортировать файлы
+    </button>
+    <button
+      class="btn"
+      (click)="mergeFiles()"
+      [disabled]="!canMerge || isLoading"
+    >
+      Слить файлы
+    </button>
+    <button
+      class="btn"
+      (click)="showStatistics()"
+      [disabled]="!canShowStatistics || isLoading"
+    >
+      Показать статистику
+    </button>
+  </div>
 
-  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
-  <app-error-message *ngIf="errorMessage" [message]="errorMessage"></app-error-message>
+  <div class="content-container">
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    <app-error-message *ngIf="errorMessage" [message]="errorMessage"></app-error-message>
+
+    <!-- Dynamically load child components -->
+    <app-file-generator
+      *ngIf="currentView === 'generator'"
+      (generationComplete)="onGenerationComplete($event)"
+      (loadingChange)="onLoadingChange($event)"
+      (errorChange)="onErrorChange($event)"
+    ></app-file-generator>
+
+    <app-file-import
+      *ngIf="currentView === 'importer'"
+      (loadingChange)="onLoadingChange($event)"
+      (errorChange)="onErrorChange($event)"
+      (importComplete)="canShowStatistics = true"
+    ></app-file-import>
+
+    <app-file-merge
+      *ngIf="currentView === 'merger'"
+      (loadingChange)="onLoadingChange($event)"
+      (errorChange)="onErrorChange($event)"
+      (mergeComplete)="canShowStatistics = true"
+    ></app-file-merge>
+
+    <app-statistics
+      *ngIf="currentView === 'statistics'"
+    ></app-statistics>
+  </div>
 </div>

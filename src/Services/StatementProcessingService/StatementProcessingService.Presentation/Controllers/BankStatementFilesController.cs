@@ -9,10 +9,12 @@ namespace StatementProcessingService.Presentation.Controllers;
 public class BankStatementFilesController : ControllerBase
 {
     private readonly IBankStatementFileService _bankStatementFileService;
+    private readonly ILogger<BankStatementFilesController> _logger;
 
-    public BankStatementFilesController(IBankStatementFileService bankStatementFileService)
+    public BankStatementFilesController(IBankStatementFileService bankStatementFileService, ILogger<BankStatementFilesController> logger)
     {
         _bankStatementFileService = bankStatementFileService;
+        _logger = logger;
     }
 
     /// <summary>
@@ -29,9 +31,10 @@ public class BankStatementFilesController : ControllerBase
     /// Получает список файлов банковских выписок.
     /// </summary>
     [HttpGet("files")]
-    public async Task<IActionResult> GetFilesList([FromQuery] GetBankStatementsRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetFilesList( CancellationToken cancellationToken)
     {
-        var files = await _bankStatementFileService.GetFilesListAsync(request, cancellationToken);
+        var files = await _bankStatementFileService.GetFilesListAsync( cancellationToken);
+        _logger.LogInformation("files :" + files.ToString());
         return Ok(files);
     }
 

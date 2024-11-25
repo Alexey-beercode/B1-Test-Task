@@ -1,0 +1,5 @@
+.error-message {
+  color: #dc3545; /* Красный цвет для ошибки */
+  font-weight: bold;
+  margin: 10px 0;
+}

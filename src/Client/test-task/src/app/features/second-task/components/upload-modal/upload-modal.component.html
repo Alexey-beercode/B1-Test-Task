@@ -1,0 +1,48 @@
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Загрузка файла</h3>
+      <button class="close-button" (click)="closeModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="file-upload-container">
+        <input
+          type="file"
+          id="fileInput"
+          (change)="onFileSelected($event)"
+          accept=".xlsx,.xls"
+          [disabled]="isLoading"
+        >
+        <label for="fileInput" class="file-upload-label">
+          {{ selectedFile ? selectedFile.name : 'Выберите файл Excel' }}
+        </label>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="isLoading" class="loading-spinner">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        class="btn cancel-btn"
+        (click)="closeModal()"
+        [disabled]="isLoading"
+      >
+        Отмена
+      </button>
+      <button
+        class="btn"
+        (click)="uploadFile()"
+        [disabled]="!selectedFile || isLoading"
+      >
+        Загрузить
+      </button>
+    </div>
+  </div>
+</div>
